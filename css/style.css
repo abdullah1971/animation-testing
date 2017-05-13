@@ -1,0 +1,79 @@
+.container{
+	position: relative;
+	left: 200px;
+	width: 2000px;
+	height: 1000px;
+}
+
+#firstCol{
+	display: inline-block;
+	height: 300px;
+	width: 50px;
+	position: absolute;
+
+	left: 300px;
+	top: 0;
+
+	background-color: blue;
+	color: white;
+	/*animation-name: moveRight;
+	animation-duration: 3s;*/
+}
+
+#firstCol p{
+
+	font-size:  50px;
+	font-weight: 700;
+	text-align: center;
+}
+
+#secondCol{
+	display: inline-block;
+	height: 150px;
+	width: 50px;
+	position: absolute;
+
+	left: 500px;
+	top: 150px;
+
+	background-color: green;
+	color: white;
+	/*animation-name: moveLeft;
+	animation-duration: 3s;*/
+}
+
+.para{
+
+	font-size:  25px;
+	font-weight: 900;
+	text-align: center;
+	color: white;
+}
+
+.col{
+
+	display: inline-block;
+	position: absolute;
+	
+}
+
+.colNum1{
+	background-color: red;
+}
+
+.colNum2{
+	background-color: green;
+}
+
+/*@keyframes moveRight{
+
+	from {left: 300px;}
+	to {left: 500px;}
+}
+
+@keyframes moveLeft{
+
+	from {left: 500px;}
+	to {left: 300px;}
+
+}*/
