@@ -24,57 +24,9 @@ function checkDigit(data){
 
 function getDigits(data){
 
-	var len, i, digit, digits = [];
+	var digits;
 
-	len = data.length;
-
-	for(i = 0; i < len;){
-
-		digit = data[i];
-
-		digits.push(digit);
-
-		i = i + 2;
-
-		//alert(digits);
-
-
-
-		/*while(!isNaN(data[i])){
-
-			digit = digit * 10 + parseInt(data[i]);
-			alert("digit:" + digit);
-			alert("before calculation i:" + i);
-
-			i = i + 1;
-
-			if(data[i] == ' '){
-
-				alert("after calculation i:" + i);
-				alert("not a number");
-				break;
-			}else if(data[i] != ' '){
-
-				alert("after calculation i:" + i);
-				alert("number");
-				//break;
-			}
-		}*/
-
-		//alert(i);
-
-		/*if(isNaN(data[i])){
-
-			while(isNaN(data[i])){
-
-				i = i + 1;
-			}
-		}*/
-
-		
-
-		//alert(digit);
-	}
+	digits = data.split(" ");
 
 	return digits;
 
@@ -170,7 +122,10 @@ function bubbleSort(digits){
 			
 
 			fColVal = document.getElementById(fval).innerHTML;
+			fColVal = parseInt(fColVal);
+			
 			sColVal = document.getElementById(sval).innerHTML;
+			sColVal = parseInt(sColVal);
 
 			if(fColVal > sColVal){
 

@@ -48,12 +48,17 @@ for(i = 0; i < colNum; i++){
 	/*columnHtml = firstHalf+ "\"colNum" + (i + 1) + "\"" + secondHalf + "\"" + thirdHalf+ "\">"  +
 	digits[i]  + fourthHalf + "<br>";*/
 
+	digits[i] = parseInt(digits[i]);
+
 	columnHtml = firstHalf + "\"colNum" + (i + 1) + "\"" + secondHalf + (i + 1) + "\'>" + digits[i] + thirdHalf + "<br>";
 
 	finalText = finalText + columnHtml;
 
+
+
 	if(digits[i] > maxVal)
 		maxVal = digits[i];
+	//alert(digits[i] + " " + maxVal);
 
 	//alert(columnHtml);
 }
@@ -69,7 +74,7 @@ parent.innerHTML = finalText;
 // dynamically created column
 //===================================
 
-var temp, idName, element, tidName = "colNum", leftVal = 200;
+var temp, idName, element, tidName = "colNum", leftVal = 200, topDiff;
 var colColor = 000000;
 
 /*var rand = Math.random();
@@ -83,7 +88,22 @@ for(i = 0; i < colNum; i++){
 
 	element.style.width = "50px";
 
-	temp = digits[i] * 50;
+	/* if digits are less than or equal 10 then multiply by 50 */
+	/* else multiply with a step factor after adding base factor */
+	if(digits[i] <= 10){
+
+		temp = digits[i] * 50;
+
+	}else{
+
+		if(digits[i] > 100){
+
+			alert('Input is too long');
+			break;
+		}
+
+		temp = 500 + digits[i] * 7;
+	}
 
 
 
@@ -99,7 +119,30 @@ for(i = 0; i < colNum; i++){
 	element.style.backgroundColor = "#" + temp;
 
 
-	element.style.top = (maxVal * 50) - (digits[i] * 50) + 50 + "px";
+	/* set the top value */
+	if(maxVal > 10){
+
+		temp = 500 + maxVal * 7 + 50;
+
+		if(digits[i] > 10){
+
+			topDiff = 500 + digits[i] * 7;
+
+		}else{
+
+			topDiff = digits[i] * 50;
+			//alert(topDiff);
+		}
+		
+
+	}else{
+
+		temp = maxVal * 50 + 50;
+		topDiff = digits[i] * 50;
+	}
+
+	//alert(maxVal + " " + temp + " " + topDiff);
+	element.style.top = temp - topDiff + "px";
 
 }
 
