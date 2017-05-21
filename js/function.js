@@ -79,7 +79,7 @@ function secondFrame(){
 
 		gspos--;
 
-		gselment.style.left = gspos + "px";
+		gselement.style.left = gspos + "px";
 	}
 }
 
@@ -98,7 +98,7 @@ function bubbleSort(digits){
 	var i , j, fcol , scol , ftrac , strac , fval , sval;
 	var fColVal , sColVal , temp , felement , slement;
 	var fleft , sleft , fstyle , sstyle , ftem , stem;
-	var fpos , spos , fid , sid;
+	var fpos , spos , fid , sid, test = 0;
 
 	for(i = 1; i <= len; i++){
 
@@ -141,10 +141,10 @@ function bubbleSort(digits){
 
 				/* change the left value of column*/
 				felement = document.getElementById(fcol);
-				selment = document.getElementById(scol);
+				selement = document.getElementById(scol);
 
 				fstyle = window.getComputedStyle(felement);
-				sstyle = window.getComputedStyle(selment);
+				sstyle = window.getComputedStyle(selement);
 
 				fleft = fstyle.getPropertyValue('left');
 				sleft = sstyle.getPropertyValue('left');
@@ -153,68 +153,72 @@ function bubbleSort(digits){
 				fpos = parseInt(fleft,10);
 				spos = parseInt(sleft,10);
 
-				fleft = fpos;
-				sleft = spos;
+				fleft = fpos + "px";
+				sleft = spos + "px";
 
-				/*setTimeout(function(){
-					alert('testing');
-				},3000);*/
+				
+				//alert(fcol);
 
-				/*var myVar = setTimeout(function(){
+				fcol = "#" + fcol;
+				scol = "#" + scol;
+
+				$(fcol).animate({
+				  left: sleft
+				}, {
+				  duration: 2000,
+				  // queue: false,
+				  // complete    : function() {  
+				  //         alert('This is alert')
+				  //     }
+				});
+
+				/*$(scol).animate({
+				  left: fleft
+				}, {
+				  duration: 50,
+				  queue: false
+				});*/
+
+				// alert('this is testing');
+
+				selement.style.left = fleft;
+
+				/*$(scol).animate({
+					left: fleft
+				},
+
+				{
+					 duration: 2000,
+					 queue: false 
+				});
+
+				$(fcol).animate({
+					left: sleft},
+					{ duration: 2000, queue: false });
+
+				
+				/*while(fpos != sleft){
+
 					fpos++;
 					spos--;
 
-					felement.style.left = fpos + "px";
-					selment.style.left = spos + "px";
-				},30);
+					$(fcol).animate({
+					    left: "fpos",
+					 }, 20 );
 
-				function myStopFunction(){
-					clearTimeout(myVar);
-				}
+					$(scol).animate({
+					    left: "spos",
+					 }, 20 );
 
-				myStopFunction();*/
-
-				while(fpos != sleft){
-
-					fpos++;
-					spos--;
-
-					felement.style.left = fpos + "px";
-					selment.style.left = spos + "px";
-
-					
-				}
-
-				/*fid = setInterval(frame,20);
-
-				function frame(){
-
-					if(fpos == sleft){
-
-						clearInterval(fid);
-
-					}else{
-
-						fpos++;
-						spos--;
-
-						felement.style.left = fpos + "px";
-						selment.style.left = spos + "px";
-					}
-				}*/
-
-
-				/*temp = fleft;
-				fleft = sleft;
-				sleft = temp;
-
-				ftem = fleft;
-				stem = sleft;
+					/*felement.style.left = fpos + "px";
+					selement.style.left = spos + "px";*/
+				/*}*/
 
 
 
-				felement.style.left = fleft;
-				selment.style.left = sleft;*/
+				
+
+
 			}
 		}
 	}
