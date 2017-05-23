@@ -8,7 +8,7 @@ var digits, i, maxVal = 0;
 // convert it in an array
 //===============================
 
-var data = prompt("Enter the array to be sorted (max 5 element, space separated value):");
+var data = prompt("Enter the array to be sorted (space separated value & no 0 value's");
 
 if(checkDigit(data)){
 
@@ -34,19 +34,10 @@ firstHalf = "<div class='col' id=";
 secondHalf = "><p class='para' id='colVal";
 thirdHalf = "</p></div>";
 
-/*firstHalf = "<div class='col' id=";
-secondHalf = "><p class=";
-thirdHalf = "colVal";
-
-fourthHalf = "</p></div>";*/
-
 var columnHtml,finalText = "";
 var parent = document.getElementById('container');
 
 for(i = 0; i < colNum; i++){
-
-	/*columnHtml = firstHalf+ "\"colNum" + (i + 1) + "\"" + secondHalf + "\"" + thirdHalf+ "\">"  +
-	digits[i]  + fourthHalf + "<br>";*/
 
 	digits[i] = parseInt(digits[i]);
 
@@ -54,13 +45,8 @@ for(i = 0; i < colNum; i++){
 
 	finalText = finalText + columnHtml;
 
-
-
 	if(digits[i] > maxVal)
 		maxVal = digits[i];
-	//alert(digits[i] + " " + maxVal);
-
-	//alert(columnHtml);
 }
 
 /* write on the container */
@@ -146,14 +132,52 @@ for(i = 0; i < colNum; i++){
 
 }
 
+var algorithm ;
+
 
 function bubble(){
 
+	algorithm = "bubbleSort";
+
+	// alert('inside bubble function' + algorithm);
+
 	bubbleSort(digits);
+
+
+
 }
 
+/* call bubble function */
+
+bubble();
 
 
+
+
+function start(){
+
+	animationStart(algorithm);
+}
+
+function pause(){
+
+	animationPause(algorithm);
+}
+
+function restart(){
+
+}
+	animationRestart(algorithm);
+
+function previous(){
+
+	animationPrevious(algorithm);
+}
+
+function next(){
+
+	animationNext(algorithm);
+}
 
 
 
