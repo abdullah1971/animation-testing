@@ -1,19 +1,34 @@
 // global variable
 //=============================
 
-var digits, i, maxVal = 0;
+var digits, i, maxVal = 0, data;
 
 // get the array from user
 //			&&
 // convert it in an array
 //===============================
 
-var data = prompt("Enter the array to be sorted (space separated value & no 0 value's");
+function takeInputFromUser(){
 
-if(checkDigit(data)){
-
-	digits = getDigits(data);
+	data = prompt("Enter the array to be sorted (space separated value & no 0 value's");
 }
+
+
+function createColumnFromUserInput(){
+
+	if(checkDigit(data)){
+
+		digits = getDigits(data);
+
+		createDynamicColumn();
+
+		addCssToDynamicallyCreatedColumn();
+	}
+	else{
+		alert('input is not valid');
+	}
+}
+
 
 
 
@@ -24,34 +39,40 @@ if(checkDigit(data)){
 // create the dynamic column
 //====================================
 
-var colNum = digits.length;
+function createDynamicColumn(){
 
-/* divide in two parts and then add id no then merge */
-var firstHalf,secondHalf,thirdHalf,fourthHalf;
+	var colNum = digits.length;
+
+	/* divide in two parts and then add id no then merge */
+	var firstHalf,secondHalf,thirdHalf,fourthHalf;
 
 
-firstHalf = "<div class='col' id=";
-secondHalf = "><p class='para' id='colVal";
-thirdHalf = "</p></div>";
+	firstHalf = "<div class='col' id=";
+	secondHalf = "><p class='para' id='colVal";
+	thirdHalf = "</p></div>";
 
-var columnHtml,finalText = "";
-var parent = document.getElementById('container');
+	var columnHtml,finalText = "";
+	var parent = document.getElementById('container');
 
-for(i = 0; i < colNum; i++){
+	for(i = 0; i < colNum; i++){
 
-	digits[i] = parseInt(digits[i]);
+		digits[i] = parseInt(digits[i]);
 
-	columnHtml = firstHalf + "\"colNum" + (i + 1) + "\"" + secondHalf + (i + 1) + "\'>" + digits[i] + thirdHalf + "<br>";
+		columnHtml = firstHalf + "\"colNum" + (i + 1) + "\"" + secondHalf + (i + 1) + "\'>" + digits[i] + thirdHalf + "<br>";
 
-	finalText = finalText + columnHtml;
+		finalText = finalText + columnHtml;
 
-	if(digits[i] > maxVal)
-		maxVal = digits[i];
+		if(digits[i] > maxVal)
+			maxVal = digits[i];
+	}
+
+	/* write on the container */
+		
+	parent.innerHTML = finalText;
+
 }
 
-/* write on the container */
-	
-parent.innerHTML = finalText;
+
 
 
 
@@ -60,77 +81,85 @@ parent.innerHTML = finalText;
 // dynamically created column
 //===================================
 
-var temp, idName, element, tidName = "colNum", leftVal = 200, topDiff;
-var colColor = 000000;
+function addCssToDynamicallyCreatedColumn(){
 
-/*var rand = Math.random();
-alert(rand * 1000000);*/
+	var temp, idName, element, tidName = "colNum", leftVal = 200, topDiff;
+	var colColor = 000000;
+	var colNum = digits.length;
 
-for(i = 0; i < colNum; i++){
+	/*var rand = Math.random();
+	alert(rand * 1000000);*/
 
-	idName = tidName + (i + 1);
+	for(i = 0; i < colNum; i++){
 
-	element = document.getElementById(idName);
+		idName = tidName + (i + 1);
 
-	element.style.width = "50px";
+		element = document.getElementById(idName);
 
-	/* if digits are less than or equal 10 then multiply by 50 */
-	/* else multiply with a step factor after adding base factor */
-	if(digits[i] <= 10){
+		element.style.width = "50px";
 
-		temp = digits[i] * 50;
+		/* if digits are less than or equal 10 then multiply by 50 */
+		/* else multiply with a step factor after adding base factor */
+		if(digits[i] <= 10){
 
-	}else{
-
-		if(digits[i] > 100){
-
-			alert('Input is too long');
-			break;
-		}
-
-		temp = 500 + digits[i] * 7;
-	}
-
-
-
-
-	element.style.height = temp + "px";
-
-	element.style.left = leftVal + 80 + "px";
-
-	leftVal = leftVal + 80;
-
-	temp = colColor + Math.ceil( Math.random() * 100000 ) + 111111 + i + 1;
-
-	element.style.backgroundColor = "#" + temp;
-
-
-	/* set the top value */
-	if(maxVal > 10){
-
-		temp = 500 + maxVal * 7 + 50;
-
-		if(digits[i] > 10){
-
-			topDiff = 500 + digits[i] * 7;
+			temp = digits[i] * 50;
 
 		}else{
 
-			topDiff = digits[i] * 50;
-			//alert(topDiff);
+			if(digits[i] > 100){
+
+				alert('Input is too long');
+				break;
+			}
+
+			temp = 500 + digits[i] * 7;
 		}
-		
 
-	}else{
 
-		temp = maxVal * 50 + 50;
-		topDiff = digits[i] * 50;
+
+
+		element.style.height = temp + "px";
+
+		element.style.left = leftVal + 80 + "px";
+
+		leftVal = leftVal + 80;
+
+		temp = colColor + Math.ceil( Math.random() * 100000 ) + 111111 + i + 1;
+
+		element.style.backgroundColor = "#" + temp;
+
+
+		/* set the top value */
+		if(maxVal > 10){
+
+			temp = 500 + maxVal * 7 + 50;
+
+			if(digits[i] > 10){
+
+				topDiff = 500 + digits[i] * 7;
+
+			}else{
+
+				topDiff = digits[i] * 50;
+				//alert(topDiff);
+			}
+			
+
+		}else{
+
+			temp = maxVal * 50 + 50;
+			topDiff = digits[i] * 50;
+		}
+
+		//alert(maxVal + " " + temp + " " + topDiff);
+		element.style.top = temp - topDiff + "px";
+
 	}
 
-	//alert(maxVal + " " + temp + " " + topDiff);
-	element.style.top = temp - topDiff + "px";
 
 }
+
+
 
 var algorithm ;
 
@@ -139,7 +168,9 @@ function bubble(){
 
 	algorithm = "bubbleSort";
 
-	// alert('inside bubble function' + algorithm);
+	takeInputFromUser();
+
+	createColumnFromUserInput();
 
 	bubbleSort(digits);
 
@@ -149,7 +180,7 @@ function bubble(){
 
 /* call bubble function */
 
-bubble();
+// bubble();
 
 
 
@@ -164,10 +195,11 @@ function pause(){
 	animationPause(algorithm);
 }
 
-function restart(){
+// function restart(){
 
-}
-	animationRestart(algorithm);
+// 	animationRestart(algorithm);
+// }
+	
 
 function previous(){
 
@@ -182,50 +214,3 @@ function next(){
 
 
 
-// for first column
-//=========================
-
-/*var fcol = document.getElementById("firstCol");
-
-var fpos = 300;
-
-var fid = setInterval(firstFrame,20);
-
-function firstFrame(){
-
-	if(fpos == 500){
-
-		clearInterval(fid);
-
-	}else{
-
-		fpos++;
-
-		fcol.style.left = fpos + 'px';
-	}
-}
-
-
-
-// for second column
-//=========================
-
-var scol = document.getElementById("secondCol");
-
-var spos = 500;
-
-var sid = setInterval(secondFrame,20);
-
-function secondFrame(){
-
-	if(spos == 300){
-
-		clearInterval(sid);
-
-	}else{
-
-		spos--;
-
-		scol.style.left = spos + 'px';
-	}
-}*/
