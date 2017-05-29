@@ -160,11 +160,11 @@ function createPositionPixel(digits){
 	var len = digits.length;
 	var i,j;
 
-	positionPixel[0] = 280;
+	positionPixel[0] = 250;
 
 	for(i = 1; i < len; i++){
 
-		positionPixel[i] = positionPixel[i-1] + 80;
+		positionPixel[i] = positionPixel[i-1] + 50;
 	}
 
 }
@@ -182,6 +182,13 @@ function bubbleSort(digits){
 	bubbleContinue = true;
 	bubblePrevious = false;
 	bubbleNext = true;
+
+}
+
+
+
+function mergeSort(digits){
+
 
 }
 

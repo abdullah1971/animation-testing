@@ -96,13 +96,18 @@ function addCssToDynamicallyCreatedColumn(){
 
 		element = document.getElementById(idName);
 
-		element.style.width = "50px";
+		element.style.width = "30px";
+
+		
+		
+
+		// an.style.marginTop = som.offsetHeight - 50
 
 		/* if digits are less than or equal 10 then multiply by 50 */
 		/* else multiply with a step factor after adding base factor */
 		if(digits[i] <= 10){
 
-			temp = digits[i] * 50;
+			temp = digits[i] * 10;
 
 		}else{
 
@@ -112,7 +117,7 @@ function addCssToDynamicallyCreatedColumn(){
 				break;
 			}
 
-			temp = 500 + digits[i] * 7;
+			temp = 100 + digits[i] * 3;
 		}
 
 
@@ -120,9 +125,9 @@ function addCssToDynamicallyCreatedColumn(){
 
 		element.style.height = temp + "px";
 
-		element.style.left = leftVal + 80 + "px";
+		element.style.left = leftVal + 50 + "px";
 
-		leftVal = leftVal + 80;
+		leftVal = leftVal + 50;
 
 		temp = colColor + Math.ceil( Math.random() * 100000 ) + 111111 + i + 1;
 
@@ -132,27 +137,62 @@ function addCssToDynamicallyCreatedColumn(){
 		/* set the top value */
 		if(maxVal > 10){
 
-			temp = 500 + maxVal * 7 + 50;
+			temp = 100 + maxVal * 3 + 50;
 
 			if(digits[i] > 10){
 
-				topDiff = 500 + digits[i] * 7;
+				topDiff = 100 + digits[i] * 3;
 
 			}else{
 
-				topDiff = digits[i] * 50;
+				topDiff = digits[i] * 10;
 				//alert(topDiff);
 			}
 			
 
 		}else{
 
-			temp = maxVal * 50 + 50;
-			topDiff = digits[i] * 50;
+			temp = maxVal * 10 + 50;
+			topDiff = digits[i] * 10;
 		}
 
 		//alert(maxVal + " " + temp + " " + topDiff);
 		element.style.top = temp - topDiff + "px";
+
+
+
+
+
+		var columnId = "#colVal" + (i + 1);
+		var divId = "#colNum" + (i +1);
+
+		var temporaryf = $(columnId).css('marginTop');
+
+		$(columnId).css('marginTop', $(divId).height() - 40);
+
+		var temporaryd = $(divId).height();
+
+		var temporarys = $(columnId).css('marginTop');
+
+
+		if(digits[i] == 1){
+
+			element.style.height = "17px";
+			element.style.top =  temp - 17 + "px";
+			$(columnId).css('marginTop', -6);
+		}
+
+		if(digits[i] == 2){
+
+			element.style.height = "24px";
+			element.style.top =  temp - 24 + "px";
+			$(columnId).css('marginTop', -4);
+		}
+
+		if(digits[i] == 3){
+
+			$(columnId).css('marginTop', 0);
+		}
 
 	}
 
@@ -162,6 +202,9 @@ function addCssToDynamicallyCreatedColumn(){
 
 
 var algorithm ;
+
+
+/*----------  bubble sort function entry point  ----------*/
 
 
 function bubble(){
@@ -175,12 +218,21 @@ function bubble(){
 	bubbleSort(digits);
 
 
-
 }
 
-/* call bubble function */
+/*----------  merge sort function entry point  ----------*/
 
-// bubble();
+
+function merge(){
+
+	algorithm = "mergeSort";
+
+	takeInputFromUser();
+
+	createColumnFromUserInput();
+
+	mergeSort(digits);
+}
 
 
 
