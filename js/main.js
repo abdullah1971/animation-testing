@@ -70,6 +70,10 @@ function merge(){
 	mergeIndex = 0;
 
 	mergePreviousIndex = beforeMergingState.length - 1;
+
+	currentWorkingSectionIndex = mergeSortCurrentWorkingRangePreviousButton.length - 1;
+
+	// beforeMergingPixelIndex = beforeMergingPixelPosition.length - 1;
 }
 
 

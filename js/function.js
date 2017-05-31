@@ -10,7 +10,8 @@ var mergeSortInitialArray = [], mergeSortFinalArray = [];
 var controlStripForMergeSort = [], mergeIndex;
 var marked = [];
 var mergePreviousIndex, beforeMergingState = [];
-var leftSidePixelPosition = [], rightSidePixelPosition = [], beforeMergingPixelPosition = [];
+var beforeMergingPixelPosition = [], beforeMergingPixelIndex;
+var mergeSortCurrentWorkingRangePreviousButton = [], currentWorkingSectionIndex;
 var redColor = "#ff0000", greenColor = "#00ff00", leftColor = redColor, rightColor = greenColor;
 
 // console.log('color code ' + parseInt(redColor.substr(1), 16));
@@ -468,6 +469,16 @@ function beforeMerging(mergeSortFinalArray, left, mid, right){
 
 
 
+/*----------  get left value by id name  ----------*/
+function getLeftValueUsingId(idName, index){
+
+	id = idName + index;
+
+	return $(id).css('left');
+}
+
+
+
 
 
 
@@ -485,6 +496,7 @@ function mergingTwoPortionOfMergeSort(mergeSortFinalArray, left, mid, right){
 
 	var leftside = [], rightSide = [];
 	var leftsideIndex = [], rightSideIndex = [], bothSideIndex = [];
+	var  leftSidePixelPosition = [], rightSidePixelPosition = [];
 
 	/* copy two selected portion in two temporary array */
 	
@@ -496,7 +508,8 @@ function mergingTwoPortionOfMergeSort(mergeSortFinalArray, left, mid, right){
 
 		leftside[i] = mergeSortFinalArray[left + i];
 		leftsideIndex[i] = findInitialArrayIndex(mergeSortInitialArray, left, mid, mergeSortFinalArray[left + i]);
-		leftSidePixelPosition[i] = positionPixel[ leftsideIndex[i] ] ;
+		// leftSidePixelPosition[i] = positionPixel[ leftsideIndex[i] ] ;
+		leftSidePixelPosition[i] = getLeftValueUsingId("#colNum", leftsideIndex[i] + 1) ;
 	}
 
 
@@ -508,7 +521,8 @@ function mergingTwoPortionOfMergeSort(mergeSortFinalArray, left, mid, right){
 
 		rightSide[i] = mergeSortFinalArray[mid + 1 + i];
 		rightSideIndex[i] = findInitialArrayIndex(mergeSortInitialArray, mid + 1, right, mergeSortFinalArray[mid + 1 + i]);
-		rightSidePixelPosition[i] = positionPixel[ rightSideIndex[i] ];
+		// rightSidePixelPosition[i] = positionPixel[ rightSideIndex[i] ];
+		rightSidePixelPosition[i] = getLeftValueUsingId("#colNum", rightSideIndex[i] + 1);
 
 	}
 
@@ -582,12 +596,15 @@ function mergingTwoPortionOfMergeSort(mergeSortFinalArray, left, mid, right){
 	controlStripForMergeSort.push(bothSideIndex);
 	console.log('inside merging bothSide Index ' + bothSideIndex);
 
+	beforeMergingState.push(bothSideIndex);
+	console.log('beforeMergingState ' + bothSideIndex);
+
 
 	beforeMergingPixelPosition.push(leftSidePixelPosition);
-	console.log('left side ' + beforeMergingPixelPosition);
+	console.log('hai, hurrah left side ' + leftSidePixelPosition);
 
 	beforeMergingPixelPosition.push(rightSidePixelPosition);
-	console.log('right side ' + beforeMergingPixelPosition);
+	console.log('hai, hurrah right side ' + rightSidePixelPosition);
 
 }
 
@@ -621,8 +638,10 @@ function mergeSort(mergeSortFinalArray, left, right){
 
 		controlStripForMergeSort.push("merging start");
 		console.log('before merging ' + controlStripForMergeSort);
-		beforeMergingState.push(beforeMerging(mergeSortFinalArray, left, mid, right));
+		// beforeMergingState.push(beforeMerging(mergeSortFinalArray, left, mid, right));
 		console.log('<br>before merging state ' + beforeMergingState);
+
+		mergeSortCurrentWorkingRangePreviousButton.push(createArrayOfIndexOfARange(left, right));
 
 		mergingTwoPortionOfMergeSort(mergeSortFinalArray, left, mid, right);
 
@@ -630,6 +649,22 @@ function mergeSort(mergeSortFinalArray, left, right){
 		console.log('after merging ' + controlStripForMergeSort);
 	}
 
+}
+
+
+/*----------  create an array of index of a range  ----------*/
+function createArrayOfIndexOfARange(start, end){
+
+	var temp = [];
+
+	var i;
+
+	for(i = start; i <= end; i++){
+
+		temp.push(i);
+	}
+
+	return temp;
 }
 
 
@@ -793,6 +828,224 @@ function changePositionToOriginalLavel(controlStripeState){
 
 
 
+/*----------  changePositionToOriginalLavelForPrevious function body  ----------*/
+function changePositionToOriginalLavelForPrevious(controlStripeState){
+
+	var i, j, len, index;
+	var idName, bottom, left, top;
+
+	len = controlStripeState.length;
+
+	for(i = 0; i < len; i++){
+
+		index = controlStripeState[i];
+
+		idName = "#colNum" + (index + 1);
+
+		top = $(idName).css('top');
+
+		top = parseInt(top, 10);
+
+		top = top - 200;
+
+		top = top + "px";
+
+		// $(idName).css('top', top);
+
+
+
+
+		// left = $(idName).css('left');
+
+		// left = parseInt(left, 10);
+
+		// left = left - 50;
+
+		// left = left + "px";
+
+		// $(idName).css('left', left);
+
+		left = positionPixel[index];
+
+		left = left + "px";
+
+
+		$(idName).animate({
+		    'top': top,
+		    'left': left
+		  }, 2000);
+
+		console.log($(idName).css('top'));
+		// console.log($(idName).css('left', bottom - 50));
+	}
+}
+
+
+
+
+
+
+
+
+/*----------  bringDownRightSideElementsMergeSort function body  ----------*/
+
+function bringDownRightSideElementsMergeSort(controlStripeState, startingPoint){
+
+	var i, j, len, index;
+	var idName, bottom, left, top;
+
+	len = controlStripeState.length;
+
+	for(i = 0; i < len; i++){
+
+		index = controlStripeState[i];
+
+		idName = "#colNum" + (index + 1);
+
+		top = $(idName).css('top');
+
+		top = parseInt(top, 10);
+
+		top = top + 200;
+
+		top = top + "px";
+
+		// $(idName).css('top', top);
+
+
+
+
+		left = positionPixel[startingPoint++];
+
+		// left = left + 50;
+
+		left = left + "px";
+
+		// $(idName).css('left', left);
+
+
+		$(idName).animate({
+		    'top': top,
+		    'left': left
+		  }, 2000);
+
+		// console.log($(idName).css('top'));
+		// console.log($(idName).css('left', bottom - 50));
+	}
+}
+
+
+
+
+
+
+
+
+/*----------  bringDownLeftSideElementsMergeSort function body  ----------*/
+
+function bringDownLeftSideElementsMergeSort(controlStripeState, startingPoint){
+
+	var i, j, len, index;
+	var idName, bottom, left, top;
+
+	len = controlStripeState.length;
+
+	for(i = 0; i < len; i++){
+
+		index = controlStripeState[i];
+
+		idName = "#colNum" + (index + 1);
+
+		top = $(idName).css('top');
+
+		top = parseInt(top, 10);
+
+		top = top + 200;
+
+		top = top + "px";
+
+		// $(idName).css('top', top);
+
+
+
+
+		left = positionPixel[startingPoint++];
+
+		// left = left - 50;
+
+		left = left + "px";
+
+		// $(idName).css('left', left);
+
+
+		$(idName).animate({
+		    'top': top,
+		    'left': left
+		  }, 2000);
+
+		// console.log($(idName).css('top'));
+		// console.log($(idName).css('left', bottom - 50));
+	}
+}
+
+
+
+
+
+/*----------  setTopPropertyOfLeftAndRightSideProperly function bdy  ----------*/
+function setTopPropertyOfLeftAndRightSideProperly(controlStripeState){
+
+	var i, j, len, index;
+	var idName, bottom, left, top;
+
+	len = controlStripeState.length;
+
+	for(i = 0; i < len; i++){
+
+		index = controlStripeState[i];
+
+		idName = "#colNum" + (index + 1);
+
+		top = $(idName).css('top');
+
+		top = parseInt(top, 10);
+
+		top = top - 200;
+
+		top = top + "px";
+
+		// $(idName).css('top', top);
+
+
+
+
+		// left = positionPixel[startingPoint++];
+
+		// left = left - 50;
+
+		// left = left + "px";
+
+		// $(idName).css('left', left);
+
+		// left = $(idName).css('left');
+
+		// left = parseInt(left, 10);
+
+		// if(side == "left"){
+
+
+		// }
+
+
+		$(idName).animate({
+		    'top': top
+		    // 'left': left
+		  }, 2000);
+
+		// console.log($(idName).css('top'));
+		// console.log($(idName).css('left', bottom - 50));
+	}
+}
 
 
 
@@ -851,17 +1104,17 @@ function changePositionToDownRight(controlStripeState){
 
 
 /*----------  beforeMergingPixelPositionArrayAccess function body  ----------*/
-function beforeMergingTakeToPreviousPosition(arrayToBeChanged, side){
+function beforeMergingTakeToPreviousPosition(arrayToBeChanged, whereToBePlaced){
 
-	var i, j, len, slen;
+	var i, j, flen, slen;
 
 	var idName, top , left, index;
 
-	len = arrayToBeChanged.length;
+	flen = arrayToBeChanged.length;
 
-	// slen = whereToBePlaced.length;
+	slen = whereToBePlaced.length;
 
-	for(i = 0; i < len; i++){
+	for(i = 0; i < flen; i++){
 
 		index = arrayToBeChanged[i];
 
@@ -879,14 +1132,14 @@ function beforeMergingTakeToPreviousPosition(arrayToBeChanged, side){
 
 
 
-		left = positionPixel[i];
+		left = whereToBePlaced[i];
 
-		if(side == "right")
-			left = left + 50;
-		else if(side == "left")
-			left = left - 50;
+		// if(side == "right")
+		// 	left = left + 50;
+		// else if(side == "left")
+		// 	left = left - 50;
 
-		left = left + "px";
+		left = left;
 
 		$(idName).animate({
 		    'top': top,
@@ -978,7 +1231,7 @@ function animationNext(algorithm){
 					intNumer = intNumer.toString(16);
 					leftColor = "#" + intNumer;
 
-					leftColor = leftColor;
+					// leftColor = leftColor;
 
 
 					colorRangeOfColumns(controlStripeState[2] + 1,controlStripeState[3] + 1, leftColor);
@@ -1002,7 +1255,7 @@ function animationNext(algorithm){
 					intNumer = intNumer.toString(16);
 					rightColor = "#" + intNumer;
 
-					rightColor = rightColor;
+					// rightColor = rightColor;
 
 
 					colorRangeOfColumns(controlStripeState[2] + 1,controlStripeState[3] + 1, rightColor);
@@ -1021,7 +1274,7 @@ function animationNext(algorithm){
 					intNumer = intNumer.toString(16);
 					leftColor = "#" + intNumer;
 
-					leftColor = leftColor;
+					// leftColor = leftColor;
 
 
 					colorAllArrayElements(controlStripeState, leftColor);
@@ -1045,7 +1298,7 @@ function animationNext(algorithm){
 					intNumer = intNumer.toString(16);
 					rightColor = "#" + intNumer;
 
-					rightColor = rightColor;
+					// rightColor = rightColor;
 
 					colorAllArrayElements(controlStripeState, rightColor);
 
@@ -1162,93 +1415,227 @@ function animationPrevious(algorithm){
 
 
 
-		if(controlStripeState == "start"){
-			/* color all the column first with black */
+		if(controlStripeState == "end"){
 
-			colorAll("#000");
+			/* color all the column blue */
+			colorAll("#0000ff");
 
-		}
-		else if(controlStripeState == "end"){
+			if(mergeIndex > 0){
 
-			/* this is the end of the control strip */
-			
-			
-		}
-		else if(controlStripeState == "merging start"){
-
-			changePositionToOriginalLavel(beforeMergingState[mergePreviousIndex]);
-
-			if(mergePreviousIndex > 0)
-				mergePreviousIndex--;
+				mergeIndex--;
+			}
 		}
 		else if(controlStripeState == "merging end"){
 
-			mergeIndex--;
+			/* call the animationPrevious function  */
+
+			if(mergeIndex > 0){
+
+				mergeIndex--;
+			}
+
+
 			animationPrevious(algorithm);
 
 			return;
 		}
-		else if(controlStripeState instanceof Array){
+		else if(controlStripeState instanceof Array && controlStripeState[0] != "break"){
 
-			var len = controlStripeState.length;
+			/* first check if it is for left side or right side */
+			
+			/* it is for right side */
+			if(controlStripForMergeSort[mergeIndex + 2] == "merging end"){
 
-			if(controlStripeState[0] == "break"){
+				/* bring down right side elements */
 
-				if(controlStripeState[1] == "left"){
+				var intNumer = parseInt(rightColor.substr(1),16);
+				if(intNumer + 20000 > 16777215)
+					intNumer = 10010100;
 
-					/* this is for left side breaking */
+				if(intNumer < 85280){
 
-					var intNumer = parseInt(leftColor.substr(1),16);
-					intNumer = intNumer + 500;
-					intNumer = intNumer.toString(16);
-					leftColor = "#" + intNumer;
-
-
-					colorRangeOfColumns(controlStripeState[2] + 1,controlStripeState[3] + 1, redColor);
-					console.log(controlStripeState);
-					
+					intNumer = 1366480;
 				}
-				else if(controlStripeState[1] == "right"){
 
-					/* this is for right side breaking */
+				intNumer = intNumer + 20000;
+				intNumer = intNumer.toString(16);
+				rightColor = "#" + intNumer;
 
-					var intNumer = parseInt(rightColor.substr(1),16);
-					intNumer = intNumer + 500;
-					intNumer = intNumer.toString(16);
-					rightColor = "#" + intNumer;
+				// rightColor = rightColor;
+
+				colorAllArrayElements(controlStripeState, rightColor);
 
 
-					colorRangeOfColumns(controlStripeState[2] + 1,controlStripeState[3] + 1, greenColor);
-					console.log(controlStripeState);
-				}
+				
+				var workingRange = mergeSortCurrentWorkingRangePreviousButton[ currentWorkingSectionIndex ];
+
+				var startingPoint = workingRange[ workingRange.length - controlStripeState.length ];
+
+				bringDownRightSideElementsMergeSort(controlStripeState, startingPoint);
 			}
-			else{
+			/* this is for left side */
+			else if(controlStripForMergeSort[mergeIndex + 3] == "merging end"){
 
-				if(controlStripForMergeSort[mergeIndex - 1] == "merging start"){
+				/* bring down left side elements */
 
-					/* this is for left side */
-					beforeMergingTakeToPreviousPosition(controlStripeState, "right");
-				}
-				else if(controlStripForMergeSort[mergeIndex - 2] == "merging start"){
 
-					/* this is for right side */
-					beforeMergingTakeToPreviousPosition(controlStripeState, "left");
-					
-				}
-				else if(controlStripForMergeSort[mergeIndex - 3] == "merging start"){
+				var intNumer = parseInt(leftColor.substr(1),16);
+				if(intNumer + 20000 > 16777215)
+					intNumer = 10010100
+				intNumer = intNumer + 20000;
+				intNumer = intNumer.toString(16);
+				leftColor = "#" + intNumer;
 
-					/* this is for both side */
-					colorAll(controlStripeState, "87ecf1");
+				colorAllArrayElements(controlStripeState, leftColor);
 
-					// changePositionToDownLavel(controlStripeState);
-					// #87ecf1
-				}
+
+
+				var workingRange = mergeSortCurrentWorkingRangePreviousButton[ currentWorkingSectionIndex ];
+
+				var startingPoint = workingRange[ workingRange.length - controlStripeState.length - controlStripeState.length ];
+
+				bringDownLeftSideElementsMergeSort(controlStripeState, startingPoint);
+
+				currentWorkingSectionIndex--;
 			}
 		}
+		else if( controlStripeState == "merging start"){
 
-		if(mergeIndex > 0)
+			/* set top property of left & right side elements properly */
+			setTopPropertyOfLeftAndRightSideProperly(controlStripForMergeSort[ mergeIndex + 3]);
+			
+		}
+		else if(controlStripeState instanceof Array && controlStripeState[0] == "break"){
+
+			/* call animationPrevious function */
+			if(mergeIndex > 0){
+
+				mergeIndex--;
+			}
+
+			animationPrevious(algorithm);
+
+			return;
+		}
+		else if(controlStripeState == "start"){
+
+			alert('you are in first step');
+		}
+
+
+
+		if(mergeIndex > 0){
+
 			mergeIndex--;
-		else
-			alert('You are in the first step');
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		// if(controlStripeState == "start"){
+		// 	/* color all the column first with black */
+
+		// 	colorAll("#000");
+
+		// }
+		// else if(controlStripeState == "end"){
+
+		// 	/* this is the end of the control strip */
+			
+			
+		// }
+		// else if(controlStripeState == "merging start"){
+
+		// 	console.log('in previous button ' + beforeMergingState[mergePreviousIndex]);
+		// 	changePositionToOriginalLavelForPrevious(beforeMergingState[mergePreviousIndex]);
+
+		// 	if(mergePreviousIndex > 0)
+		// 		mergePreviousIndex--;
+		// }
+		// else if(controlStripeState == "merging end"){
+
+		// 	mergeIndex--;
+		// 	animationPrevious(algorithm);
+
+		// 	return;
+		// }
+		// else if(controlStripeState instanceof Array){
+
+		// 	var len = controlStripeState.length;
+
+		// 	if(controlStripeState[0] == "break"){
+
+		// 		if(controlStripeState[1] == "left"){
+
+		// 			/* this is for left side breaking */
+
+		// 			var intNumer = parseInt(leftColor.substr(1),16);
+		// 			intNumer = intNumer + 500;
+		// 			intNumer = intNumer.toString(16);
+		// 			leftColor = "#" + intNumer;
+
+
+		// 			colorRangeOfColumns(controlStripeState[2] + 1,controlStripeState[3] + 1, redColor);
+		// 			console.log(controlStripeState);
+					
+		// 		}
+		// 		else if(controlStripeState[1] == "right"){
+
+		// 			 this is for right side breaking 
+
+		// 			var intNumer = parseInt(rightColor.substr(1),16);
+		// 			intNumer = intNumer + 500;
+		// 			intNumer = intNumer.toString(16);
+		// 			rightColor = "#" + intNumer;
+
+
+		// 			colorRangeOfColumns(controlStripeState[2] + 1,controlStripeState[3] + 1, greenColor);
+		// 			console.log(controlStripeState);
+		// 		}
+		// 	}
+		// 	else{
+
+		// 		if(controlStripForMergeSort[mergeIndex - 1] == "merging start"){
+
+		// 			/* this is for left side */
+		// 			beforeMergingTakeToPreviousPosition(controlStripeState, beforeMergingPixelPosition[ beforeMergingPixelIndex ]);
+		// 			beforeMergingPixelIndex--;
+		// 		}
+		// 		else if(controlStripForMergeSort[mergeIndex - 2] == "merging start"){
+
+		// 			/* this is for right side */
+		// 			beforeMergingTakeToPreviousPosition(controlStripeState, beforeMergingPixelPosition[ beforeMergingPixelIndex ]);
+		// 			beforeMergingPixelIndex--;
+					
+		// 		}
+		// 		else if(controlStripForMergeSort[mergeIndex - 3] == "merging start"){
+
+		// 			/* this is for both side */
+		// 			colorAll(controlStripeState, "87ecf1");
+
+		// 			// changePositionToDownLavel(controlStripeState);
+		// 			// #87ecf1
+		// 		}
+		// 	}
+		// }
+
+		// if(mergeIndex > 0)
+		// 	mergeIndex--;
+		// else
+		// 	alert('You are in the first step');
 	}
 }
