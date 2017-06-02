@@ -77,3 +77,14 @@
 	to {left: 300px;}
 
 }*/
+
+
+.circle-div{
+	top: 150px;
+	left: 500px;
+	height: 50px;
+	width: 50px;
+	border-radius: 50%;
+	background-color: red;
+	text-align: center;
+}

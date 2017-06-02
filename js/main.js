@@ -78,6 +78,63 @@ function merge(){
 
 
 
+function bfs(){
+
+	algorithm = "bfs";
+
+
+	takeInputFromUserForBfs();
+
+	var selectInputBfs = parseInt(data,10);
+
+
+
+	bfsInputSet[10] = [[1,2],
+					   [1,3],
+					   [3,5],
+					   [2,5],
+					   [3,4],
+					   [5,4],
+					   [6,4],
+					   [7,10],
+					   [3,6],
+					   [6,8],
+					   [5,7],
+					   [9,10],
+					   [8,9]
+					   ];
+
+	bfsInputSet[5] = [[1,2],
+					  [1,3],
+					  [3,4],
+					  [2,5]
+					  ];
+
+	bfsInputSet[8] = [[1,2],
+					  [1,3],
+					  [1,4],
+					  [3,4],
+					  [4,5],
+					  [5,6],
+					  [5,7],
+					  [3,7],
+					  [7,8]
+					  ];
+
+	adjacentNode = [];
+	nodePosition = [];
+
+	drawBfsInputSet(selectInputBfs);
+
+	runBfs(selectInputBfs);
+
+	bfsAnimationIndex = 0;
+
+	bfsAnimationPreviousIndex = bfsControlStrip.length - 1;
+}
+
+
+
 
 function start(){
 
